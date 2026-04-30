@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vermögen & Einkommen · Deutschland</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ═══════════════════════════════════════
+   DESIGN TOKENS — DARK / LIGHT
+═══════════════════════════════════════ */
+:root {
+  --gold:    #c9a84c;
+  --gold-lt: #e8c97a;
+  --gold-dk: #8a6a28;
+  --blue:    #5b9bd5;
+  --blue-lt: #89bcec;
+  --rose:    #d4617a;
+  --rose-lt: #e88da0;
+  --sage:    #6bbf8e;
+  --violet:  #9b7ed4;
+}
+
+[data-theme="dark"] {
+  --bg:         #0c0c10;
+  --bg2:        #111118;
+  --surface:    #18181f;
+  --surface2:   #1e1e28;
+  --border:     #2c2c3a;
+  --border2:    #3a3a4e;
+  --text:       #e8e5de;
+  --text2:      #a8a4a0;
+  --text3:      #5e5a60;
+  --grid-line:  #1e1e28;
+  --thumb-bg:   #0c0c10;
+  --user-line:  rgba(255,255,255,0.6);
+  --user-label: rgba(255,255,255,0.75);
+  --card-deep:  #09090d;
+  --toggle-off: #252530;
+}
+
+[data-theme="light"] {
+  --bg:         #f5f3ef;
+  --bg2:        #edeae4;
+  --surface:    #ffffff;
+  --surface2:   #f0ede7;
+  --border:     #ddd9d0;
+  --border2:    #c8c3b8;
+  --text:       #1a1814;
+  --text2:      #6b6560;
+  --text3:      #b0aaa4;
+  --grid-line:  #eae6e0;
+  --thumb-bg:   #ffffff;
+  --user-line:  rgba(0,0,0,0.5);
+  --user-label: rgba(0,0,0,0.65);
+  --card-deep:  #fafaf8;
+  --toggle-off: #e0dcd6;
+}
+
+/* ═══════════════════════════════════════
+   BASE
+═══════════════════════════════════════ */
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+  padding: 48px 24px 80px;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+.container { max-width: 800px; margin: 0 auto; }
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+header {
+  margin-bottom: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.header-text {}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.subtitle {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+/* Mode toggle button */
+.mode-toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+  white-space: nowrap;
+}
+.mode-toggle:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.mode-icon { font-size: 14px; }
+
+/* ═══════════════════════════════════════
+   DECORATIVE RULE
+═══════════════════════════════════════ */
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+  margin-bottom: 32px;
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════
+   CARD BASE
+═══════════════════════════════════════ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  margin-bottom: 20px;
+  transition: background 0.35s, border-color 0.35s;
+}
+
+.card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ═══════════════════════════════════════
+   INPUT CARD — ACCENT TOP BORDER
+═══════════════════════════════════════ */
+.input-card {
+  border-top: 2px solid var(--gold);
+  border-radius: 2px 2px 12px 12px;
+}
+
+/* ═══════════════════════════════════════
+   SLIDERS
+═══════════════════════════════════════ */
+.slider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.slider-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.slider-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.slider-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1;
+}
+.slider-value .unit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text3);
+  margin-left: 3px;
+}
+
+/* slider track with dynamic fill color via JS */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--border2);
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--thumb-bg);
+  box-shadow: 0 0 0 1px var(--gold);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 1px var(--gold), 0 0 12px rgba(201,168,76,0.35);
+}
+#ageRange::-webkit-slider-thumb { background: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+#ageRange::-webkit-slider-thumb:hover { box-shadow: 0 0 0 1px var(--blue), 0 0 12px rgba(91,155,213,0.35); }
+#incomeRange::-webkit-slider-thumb { background: var(--rose); box-shadow: 0 0 0 1px var(--rose); }
+#incomeRange::-webkit-slider-thumb:hover { box-shadow: 0 0 0 1px var(--rose), 0 0 12px rgba(212,97,122,0.35); }
+
+.slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.slider-ticks span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text3);
+}
+
+/* ═══════════════════════════════════════
+   HOUSEHOLD ROW
+═══════════════════════════════════════ */
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 0 22px;
+}
+
+.household-row {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.household-block { display: flex; flex-direction: column; gap: 10px; }
+
+.household-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Toggle */
+.toggle-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+
+.toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+
+.tog-track {
+  position: absolute;
+  inset: 0;
+  background: var(--toggle-off);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.tog-thumb {
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--text3);
+  top: 2px; left: 2px;
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1), background 0.2s;
+}
+.toggle input:checked ~ .tog-track {
+  background: rgba(107,191,142,0.18);
+  border-color: var(--sage);
+}
+.toggle input:checked ~ .tog-thumb {
+  transform: translateX(20px);
+  background: var(--sage);
+}
+
+.toggle-text { font-size: 13px; font-weight: 500; color: var(--text); }
+
+/* Kids chips */
+.children-chips { display: flex; gap: 6px; }
+
+.chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.chip:hover { border-color: var(--violet); color: var(--violet); background: rgba(155,126,212,0.06); }
+.chip.active {
+  background: rgba(155,126,212,0.12);
+  border-color: var(--violet);
+  color: var(--violet);
+}
+
+/* Context note */
+.context-note {
+  margin-top: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text3);
+  padding: 9px 14px;
+  background: var(--surface2);
+  border-radius: 6px;
+  line-height: 1.6;
+  border-left: 2px solid var(--border2);
+  transition: all 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   RESULT CARD
+═══════════════════════════════════════ */
+.result-card {
+  background: var(--card-deep);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.35s, border-color 0.35s;
+}
+
+/* Shimmer top bar */
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--gold-dk) 20%,
+    var(--gold) 50%,
+    var(--gold-dk) 80%,
+    transparent 100%
+  );
+}
+
+/* Corner decoration */
+.result-card::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at top right, rgba(201,168,76,0.06), transparent 70%);
+  pointer-events: none;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.stat-block {}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.stat-sub {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.4;
+  font-weight: 300;
+}
+
+/* Adjustment badge */
+.adj-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  background: rgba(155,126,212,0.08);
+  border: 1px solid rgba(155,126,212,0.25);
+  color: var(--violet);
+  margin-bottom: 20px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.adj-badge.hidden { opacity: 0; pointer-events: none; transform: translateY(-4px); }
+
+/* Progress bars */
+.pbar-section { margin-top: 4px; }
+
+.pbar-row { margin-bottom: 14px; }
+
+.pbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.pbar-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text2);
+}
+.pbar-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.pbar-track {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  position: relative;
+  overflow: visible;
+}
+
+.pbar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+
+.pbar-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 2px solid var(--card-deep);
+  box-shadow: 0 0 0 1px var(--text2), 0 2px 8px rgba(0,0,0,0.3);
+  transition: left 0.55s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2;
+}
+
+/* Verdict */
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 6px;
+  letter-spacing: 0.01em;
+}
+.verdict.good { background: rgba(107,191,142,0.1); color: var(--sage); border: 1px solid rgba(107,191,142,0.25); }
+.verdict.ok   { background: rgba(201,168,76,0.1);  color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+.verdict.low  { background: rgba(212,97,122,0.1);  color: var(--rose); border: 1px solid rgba(212,97,122,0.25); }
+
+/* ═══════════════════════════════════════
+   CHART CARDS
+═══════════════════════════════════════ */
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px 14px;
+  margin-bottom: 20px;
+  transition: background 0.35s, border-color 0.35s;
+}
+
+.legend {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text2);
+}
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+svg { width: 100%; overflow: visible; }
+
+.source {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text3);
+  text-align: right;
+  margin-top: 10px;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.page-footer {
+  text-align: center;
+  margin-top: 40px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-text">
+      <div class="eyebrow">Deutschland · PHF 2023 · Bundesbank / IW Köln</div>
+      <h1>Vermögen &amp; <em>Einkommen</em><br>nach Altersgruppen</h1>
+      <p class="subtitle">Medianwerte für Deutschland. Haushaltsnettovermögen vs. Bruttomediangehalt — sieh wo du im Vergleich stehst.</p>
+    </div>
+    <button class="mode-toggle" id="modeToggle" onclick="toggleMode()">
+      <span class="mode-icon" id="modeIcon">☀️</span>
+      <span id="modeLabel">Light</span>
+    </button>
+  </header>
+
+  <div class="rule"></div>
+
+  <!-- INPUT CARD -->
+  <div class="card input-card">
+    <div class="card-label">Deine Eingabe</div>
+
+    <div class="slider-grid">
+      <div>
+        <div class="slider-top">
+          <div class="slider-label">Alter</div>
+          <div class="slider-value" id="ageDisplay">29<span class="unit">J</span></div>
+        </div>
+        <input type="range" id="ageRange" min="18" max="75" value="29" step="1">
+        <div class="slider-ticks"><span>18</span><span>75</span></div>
+      </div>
+
+      <div>
+        <div class="slider-top">
+        <div class="slider-label" id="incomeSliderLabel">Brutto / Monat</div>
+          <div class="slider-value" id="incomeDisplay">5.500<span class="unit">€</span></div>
+        </div>
+        <input type="range" id="incomeRange" min="1000" max="15000" value="5500" step="100">
+        <div class="slider-ticks"><span>1.000</span><span>15.000</span></div>
+      </div>
+
+      <div>
+        <div class="slider-top">
+          <div class="slider-label">Nettovermögen</div>
+          <div class="slider-value" id="wealthDisplay">80.000<span class="unit">€</span></div>
+        </div>
+        <input type="range" id="wealthRange" min="-20000" max="1000000" value="80000" step="5000">
+        <div class="slider-ticks"><span>-20k</span><span>1 Mio.+</span></div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="household-row">
+      <div class="household-block">
+        <div class="household-label">Haushalt</div>
+        <label class="toggle-wrap">
+          <div class="toggle">
+            <input type="checkbox" id="partnerToggle">
+            <div class="tog-track"></div>
+            <div class="tog-thumb"></div>
+          </div>
+          <span class="toggle-text" id="partnerLabel">Kein Partner</span>
+        </label>
+      </div>
+
+      <div class="household-block">
+        <div class="household-label">Kinder</div>
+        <div class="children-chips">
+          <button class="chip active" data-kids="0">0</button>
+          <button class="chip" data-kids="1">1</button>
+          <button class="chip" data-kids="2">2</button>
+          <button class="chip" data-kids="3">3</button>
+          <button class="chip" data-kids="4">4+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="context-note" id="contextNote">
+      Einzelperson · Kein Kind · Direkter Vergleich mit Altersgruppen-Median.
+    </div>
+  </div>
+
+  <!-- RESULT CARD -->
+  <div class="result-card">
+    <div class="card-label" style="margin-bottom:18px;">Deine Einordnung</div>
+
+    <div class="adj-badge hidden" id="adjBadge">
+      ◈ Haushaltsgröße berücksichtigt (OECD-Äquivalenzskala)
+    </div>
+
+    <div class="result-grid">
+      <div class="stat-block">
+        <div class="stat-label">Vermögens-Perzentil</div>
+        <div class="stat-value" id="wealthPctDisplay" style="color:var(--gold)">—</div>
+        <div class="stat-sub" id="wealthPctSub">—</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label" id="incomePctLabel">Einkommens-Perzentil</div>
+        <div class="stat-value" id="incomePctDisplay" style="color:var(--rose)">—</div>
+        <div class="stat-sub" id="incomePctSub">—</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Äquivalenzeinkommen</div>
+        <div class="stat-value" id="equivDisplay" style="color:var(--violet)">—</div>
+        <div class="stat-sub" id="equivSub">—</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Median Altersgruppe</div>
+        <div class="stat-value" id="groupMedianDisplay" style="color:var(--blue)">—</div>
+        <div class="stat-sub" id="groupMedianSub">—</div>
+      </div>
+    </div>
+
+    <div class="pbar-section">
+      <div class="pbar-row">
+        <div class="pbar-header">
+          <span class="pbar-name">Vermögen vs. Altersgruppe</span>
+          <span class="pbar-pct" id="wealthBarPct" style="color:var(--gold)"></span>
+        </div>
+        <div class="pbar-track">
+          <div class="pbar-fill" id="wealthBarFill"
+            style="background:linear-gradient(90deg, var(--gold-dk), var(--gold))"></div>
+          <div class="pbar-marker" id="wealthMarker"></div>
+        </div>
+      </div>
+
+      <div class="pbar-row">
+        <div class="pbar-header">
+          <span class="pbar-name" id="incomePbarLabel">Einkommen vs. Altersgruppe</span>
+          <span class="pbar-pct" id="incomeBarPct" style="color:var(--rose)"></span>
+        </div>
+        <div class="pbar-track">
+          <div class="pbar-fill" id="incomeBarFill"
+            style="background:linear-gradient(90deg, #7a2040, var(--rose))"></div>
+          <div class="pbar-marker" id="incomeMarker"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="verdictEl"></div>
+  </div>
+
+  <!-- WEALTH CHART -->
+  <div class="chart-card">
+    <div class="card-label">Medianvermögen nach Altersgruppe · Haushalt</div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--gold)"></div>Median-Vermögen
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--blue)"></div>Top-10%-Schwelle
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--text2); opacity:0.7"></div>Dein Wert
+      </div>
+    </div>
+    <svg id="wealthChart" viewBox="0 0 700 260"></svg>
+    <div class="source">Quelle: IW Köln / Deutsche Bundesbank PHF 2023</div>
+  </div>
+
+  <!-- INCOME CHART -->
+  <div class="chart-card">
+    <div class="card-label" id="incomeChartLabel">Bruttomediangehalt nach Altersgruppe · Vollzeit sv-pflichtig</div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--rose)"></div><span id="incomeLegendLabel">Bruttomedian / Monat</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--text2); opacity:0.7"></div>Dein Äquivalenz-Wert
+      </div>
+    </div>
+    <svg id="incomeChart" viewBox="0 0 700 200"></svg>
+    <div class="source" id="incomeChartSource">Quelle: Bundesagentur für Arbeit 2024 / Stepstone Gehaltsreport</div>
+  </div>
+
+  <div class="page-footer">
+    Alle Angaben in Euro · Schätzwerte auf Basis öffentlich verfügbarer Statistiken
+  </div>
+
+</div>
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const wealthByAge = [
+  { minAge:18, maxAge:34, label:"< 35",  median:17300,  top10:100000,
+    pcts:[{p:0,v:-50000},{p:10,v:0},{p:25,v:2000},{p:50,v:17300},{p:75,v:55000},{p:80,v:100000},{p:90,v:150000},{p:95,v:220000},{p:100,v:500000}] },
+  { minAge:35, maxAge:44, label:"35–44", median:75500,  top10:270000,
+    pcts:[{p:0,v:-30000},{p:10,v:1000},{p:25,v:15000},{p:50,v:75500},{p:75,v:180000},{p:90,v:270000},{p:95,v:400000},{p:100,v:900000}] },
+  { minAge:45, maxAge:54, label:"45–54", median:168000, top10:620000,
+    pcts:[{p:0,v:-10000},{p:10,v:5000},{p:25,v:40000},{p:50,v:168000},{p:75,v:380000},{p:90,v:620000},{p:95,v:850000},{p:100,v:2000000}] },
+  { minAge:55, maxAge:64, label:"55–64", median:241100, top10:1060000,
+    pcts:[{p:0,v:0},{p:10,v:10000},{p:25,v:60000},{p:50,v:241100},{p:75,v:550000},{p:90,v:1060000},{p:95,v:1500000},{p:100,v:3000000}] },
+  { minAge:65, maxAge:74, label:"65–74", median:210000, top10:880000,
+    pcts:[{p:0,v:0},{p:10,v:8000},{p:25,v:50000},{p:50,v:210000},{p:75,v:480000},{p:90,v:880000},{p:95,v:1200000},{p:100,v:2500000}] },
+  { minAge:75, maxAge:99, label:"75+",   median:172500, top10:700000,
+    pcts:[{p:0,v:0},{p:10,v:5000},{p:25,v:40000},{p:50,v:172500},{p:75,v:400000},{p:90,v:700000},{p:95,v:1000000},{p:100,v:2000000}] },
+];
+
+const incomeByAge = [
+  { minAge:18, maxAge:24, label:"< 25",  monthly:3061, isPension:false,
+    pcts:[{p:0,v:1200},{p:25,v:2000},{p:50,v:3061},{p:75,v:4000},{p:90,v:5500},{p:100,v:10000}] },
+  { minAge:25, maxAge:29, label:"25–29", monthly:3200, isPension:false,
+    pcts:[{p:0,v:1500},{p:25,v:2400},{p:50,v:3200},{p:75,v:4600},{p:90,v:6800},{p:100,v:15000}] },
+  { minAge:30, maxAge:34, label:"30–34", monthly:3500, isPension:false,
+    pcts:[{p:0,v:1800},{p:25,v:2700},{p:50,v:3500},{p:75,v:5200},{p:90,v:7800},{p:100,v:15000}] },
+  { minAge:35, maxAge:44, label:"35–44", monthly:3900, isPension:false,
+    pcts:[{p:0,v:2000},{p:25,v:2900},{p:50,v:3900},{p:75,v:5700},{p:90,v:8800},{p:100,v:15000}] },
+  { minAge:45, maxAge:54, label:"45–54", monthly:4165, isPension:false,
+    pcts:[{p:0,v:2000},{p:25,v:3100},{p:50,v:4165},{p:75,v:6200},{p:90,v:9200},{p:100,v:15000}] },
+  { minAge:55, maxAge:64, label:"55–64", monthly:4000, isPension:false,
+    pcts:[{p:0,v:1800},{p:25,v:2900},{p:50,v:4000},{p:75,v:5900},{p:90,v:8800},{p:100,v:15000}] },
+  // 65+ → Renten-/Pensionsdaten (GRV-Median 2023, inkl. Betriebsrente Schätzung)
+  // Median gesetzliche Rente ~1.400 €/Monat (Männer ~1.700, Frauen ~1.050)
+  // Gesamtversorgung inkl. betriebl. + privat: Median ~1.800 €
+  { minAge:65, maxAge:74, label:"65–74", monthly:1800, isPension:true,
+    pcts:[{p:0,v:400},{p:10,v:700},{p:25,v:1100},{p:50,v:1800},{p:75,v:2800},{p:90,v:4200},{p:95,v:5500},{p:100,v:9000}] },
+  { minAge:75, maxAge:99, label:"75+",   monthly:1600, isPension:true,
+    pcts:[{p:0,v:300},{p:10,v:600},{p:25,v:950},{p:50,v:1600},{p:75,v:2500},{p:90,v:3800},{p:95,v:5000},{p:100,v:8000}] },
+];
+
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+function oecdScale(hasPartner, kids) {
+  return 1.0 + (hasPartner ? 0.5 : 0) + kids * 0.3;
+}
+function wealthEquivFactor(hasPartner, kids) {
+  return 1.0 + (hasPartner ? 0.7 : 0) + kids * 0.05;
+}
+function getGroup(age, data) {
+  return data.find(g => age >= g.minAge && age <= g.maxAge) || data[data.length-1];
+}
+function interpolatePct(value, pcts) {
+  if (value <= pcts[0].v) return pcts[0].p;
+  if (value >= pcts[pcts.length-1].v) return pcts[pcts.length-1].p;
+  for (let i=0; i<pcts.length-1; i++) {
+    const lo=pcts[i], hi=pcts[i+1];
+    if (value>=lo.v && value<=hi.v) {
+      const t=(value-lo.v)/(hi.v-lo.v);
+      return Math.round(lo.p+t*(hi.p-lo.p));
+    }
+  }
+  return 50;
+}
+function fmtEuro(n) {
+  if (Math.abs(n)>=1000000) return (n/1000000).toFixed(2).replace('.',',')+' Mio. €';
+  return n.toLocaleString('de')+' €';
+}
+
+// CSS var reader
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let userAge=29, userIncome=5500, userWealth=80000;
+let hasPartner=false, numKids=0;
+let isDark=true;
+
+// ═══════════════════════════════════════
+// DARK/LIGHT MODE
+// ═══════════════════════════════════════
+function toggleMode() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('modeIcon').textContent = isDark ? '☀️' : '🌙';
+  document.getElementById('modeLabel').textContent = isDark ? 'Light' : 'Dark';
+  setTimeout(update, 50); // redraw charts with new colors
+}
+
+// ═══════════════════════════════════════
+// CONTEXT NOTE
+// ═══════════════════════════════════════
+function buildContextNote() {
+  const kids = numKids===4?4:numKids;
+  const scale = oecdScale(hasPartner, kids);
+  const parts = [
+    hasPartner ? 'Mit Partner' : 'Einzelperson',
+    kids===0 ? 'kein Kind' : kids===4 ? '4+ Kinder' : kids+' Kind'+(kids>1?'er':''),
+  ];
+  if (scale > 1) {
+    parts.push('OECD-Faktor ÷'+scale.toFixed(1)+' auf Äquivalenzeinkommen');
+  } else {
+    parts.push('Direkter Vergleich mit Altersgruppen-Median');
+  }
+  return parts.join(' · ');
+}
+
+// ═══════════════════════════════════════
+// UPDATE
+// ═══════════════════════════════════════
+function update() {
+  const wg = getGroup(userAge, wealthByAge);
+  const ig = getGroup(userAge, incomeByAge);
+  const kids = numKids===4?4:numKids;
+  const incomeScale = oecdScale(hasPartner, kids);
+  const isAdjusted = hasPartner || kids > 0;
+  const isPension = ig.isPension;
+
+  // Dynamically switch slider label + range for pension age
+  const incomeSlider = document.getElementById('incomeRange');
+  const incomeLabel  = document.getElementById('incomeSliderLabel');
+  const incomeTicks  = incomeSlider.nextElementSibling;
+  if (isPension) {
+    incomeLabel.textContent = 'Rente / Pension / Monat';
+    if (incomeSlider.max !== '9000') {
+      incomeSlider.max = '9000';
+      incomeSlider.min = '300';
+      incomeSlider.step = '50';
+      if (+incomeSlider.value > 9000) incomeSlider.value = 1800;
+      userIncome = +incomeSlider.value;
+      const v = userIncome.toLocaleString('de');
+      document.getElementById('incomeDisplay').innerHTML = v + '<span class="unit">€</span>';
+    }
+    incomeTicks.children[0].textContent = '300';
+    incomeTicks.children[1].textContent = '9.000';
+  } else {
+    incomeLabel.textContent = 'Brutto / Monat';
+    if (incomeSlider.max !== '15000') {
+      incomeSlider.max = '15000';
+      incomeSlider.min = '1000';
+      incomeSlider.step = '100';
+      if (+incomeSlider.value < 1000) incomeSlider.value = 3200;
+      userIncome = +incomeSlider.value;
+      const v = userIncome >= 10000 ? (userIncome/1000).toFixed(1).replace('.',',')+'k' : userIncome.toLocaleString('de');
+      document.getElementById('incomeDisplay').innerHTML = v + '<span class="unit">€</span>';
+    }
+    incomeTicks.children[0].textContent = '1.000';
+    incomeTicks.children[1].textContent = '15.000';
+  }
+
+  const equivIncome = Math.round(userIncome / incomeScale);
+
+  const wPct = interpolatePct(userWealth, wg.pcts);
+  const iPct = interpolatePct(equivIncome, ig.pcts);
+
+  document.getElementById('wealthPctDisplay').textContent = 'P'+wPct;
+  document.getElementById('incomePctDisplay').textContent = 'P'+iPct;
+  document.getElementById('groupMedianDisplay').textContent = fmtEuro(wg.median);
+  document.getElementById('groupMedianSub').textContent = 'Haushalt-Median · Gruppe '+wg.label;
+
+  const wDiff = userWealth - wg.median;
+  document.getElementById('wealthPctSub').textContent =
+    (wDiff>=0?'+':'')+fmtEuro(wDiff)+' vs. Median · Gruppe '+wg.label;
+
+  document.getElementById('equivDisplay').textContent = equivIncome.toLocaleString('de')+' €';
+  document.getElementById('equivSub').textContent = isAdjusted
+    ? (isPension ? 'Äquivalenzrente/Monat (÷'+incomeScale.toFixed(1)+')' : 'Äquivalenzeinkommen/Monat (÷'+incomeScale.toFixed(1)+')')
+    : (isPension ? 'Deine Rente/Monat (kein Faktor)' : 'Dein Brutto/Monat (kein Faktor)');
+
+  // Income stat label — rename for pension
+  document.getElementById('incomePctLabel').textContent = isPension ? 'Renten-Perzentil' : 'Einkommens-Perzentil';
+
+  const iDiff = equivIncome - ig.monthly;
+  document.getElementById('incomePctSub').textContent =
+    (iDiff>=0?'+':'')+iDiff.toLocaleString('de')+' €/Monat vs. Median · '+ig.label;
+
+  document.getElementById('wealthBarFill').style.width = wPct+'%';
+  document.getElementById('wealthMarker').style.left = wPct+'%';
+  document.getElementById('wealthBarPct').textContent = 'Top '+(100-wPct)+'%';
+
+  document.getElementById('incomeBarFill').style.width = iPct+'%';
+  document.getElementById('incomeMarker').style.left = iPct+'%';
+  document.getElementById('incomeBarPct').textContent = 'Top '+(100-iPct)+'%';
+
+  document.getElementById('adjBadge').classList.toggle('hidden', !isAdjusted);
+  document.getElementById('contextNote').textContent = buildContextNote();
+
+  // Income chart title
+  document.getElementById('incomeChartLabel').textContent = isPension
+    ? 'Median-Rente nach Altersgruppe · Gesetzl. + Betriebl. (Schätzung)'
+    : 'Bruttomediangehalt nach Altersgruppe · Vollzeit sv-pflichtig';
+  document.getElementById('incomeChartSource').textContent = isPension
+    ? 'Quelle: Deutsche Rentenversicherung 2023 / BMAS / eigene Schätzung Gesamtversorgung'
+    : 'Quelle: Bundesagentur für Arbeit 2024 / Stepstone Gehaltsreport';
+  document.getElementById('incomeLegendLabel').textContent = isPension
+    ? 'Median-Rente / Monat'
+    : 'Bruttomedian / Monat';
+  document.getElementById('incomePbarLabel').textContent = isPension
+    ? 'Rente vs. Altersgruppe'
+    : 'Einkommen vs. Altersgruppe';
+
+  // ── DIFFERENZIERTES VERDICT ──
+  // Drei Stufen je Dimension: top (≥80), high (≥60), mid (≥35), low (<35)
+  const wTop  = wPct >= 80;
+  const wHigh = wPct >= 60 && wPct < 80;
+  const wMid  = wPct >= 35 && wPct < 60;
+  const wLow  = wPct < 35;
+
+  const iTop  = iPct >= 80;
+  const iHigh = iPct >= 60 && iPct < 80;
+  const iMid  = iPct >= 35 && iPct < 60;
+  const iLow  = iPct < 35;
+
+  const iW = isPension ? 'Rente' : 'Einkommen';
+  const iWG = isPension ? 'der Rente' : 'des Einkommens';
+  const iWL = isPension ? 'Rentenanspruch' : 'Einkommen';
+  const hh = hasPartner ? ' (Haushalt)' : '';
+  const kidsNote = kids > 0 ? ` Kinder binden laufende Mittel — das dämpft typischerweise die Sparquote in dieser Phase.` : '';
+
+  let cls, icon, headline, detail;
+
+  // ── TOP-TIER ──
+  if (wTop && iTop) {
+    cls='good'; icon='↑↑';
+    headline = `Ausgezeichnete Gesamtposition`;
+    detail = `Sowohl Vermögen (Top ${100-wPct}%) als auch ${iW} (Top ${100-iPct}%) liegen deutlich über dem Median deiner Altersgruppe${hh}. Du befindest dich in einer Minderheit, die beides kombiniert — das ist keine Selbstverständlichkeit.${kidsNote}`;
+  } else if (wTop && iHigh) {
+    cls='good'; icon='↑';
+    headline = `Starkes Vermögen, solides ${iW}`;
+    detail = `Dein Vermögen (Top ${100-wPct}%) ist außergewöhnlich für deine Altersgruppe. Das ${iW} liegt überdurchschnittlich — aber der eigentliche Vorsprung kommt aus dem bereits aufgebauten Kapital.${kidsNote}`;
+  } else if (wHigh && iTop) {
+    cls='good'; icon='↑';
+    headline = `Hohes ${iW}, Vermögen noch ausbaufähig`;
+    detail = `Dein ${iW} gehört zu den oberen ${100-iPct}% deiner Altersgruppe — ein klarer Vorteil beim weiteren Vermögensaufbau. Das Vermögen (P${wPct}) ist gut, aber bei diesem Einkommensniveau ist mehr drin.${kidsNote}`;
+  } else if (wTop && iMid) {
+    cls='good'; icon='↑';
+    headline = `Überdurchschnittliches Vermögen, mittleres ${iW}`;
+    detail = `Das Vermögen (Top ${100-wPct}%) spricht für konsequentes Sparen oder günstigen Start. Das ${iW} ist solide, aber der Vorsprung ist primär strukturell — nicht durch laufenden Cashflow getrieben.${kidsNote}`;
+  } else if (wMid && iTop) {
+    cls='ok'; icon='→↑';
+    headline = `Sehr hohes ${iW}, Vermögensaufbau noch im Gange`;
+    detail = `Mit einem ${iW} in den Top ${100-iPct}% hast du erhebliches Potenzial — das Vermögen (P${wPct}) hält aber noch nicht Schritt. Entweder ist die Sparquote gering, oder das Einkommen ist erst kürzlich gestiegen.${kidsNote}`;
+  } else if (wHigh && iHigh) {
+    cls='good'; icon='↑';
+    headline = `Gute Balance aus Vermögen und ${iW}`;
+    detail = `Beide Dimensionen liegen überdurchschnittlich — Vermögen P${wPct}, ${iW} P${iPct}. Keine extremen Ausreißer, aber eine konsistent starke Position.${kidsNote}`;
+  } else if (wTop && iLow) {
+    cls='ok'; icon='→';
+    headline = `Starkes Vermögen, schwaches laufendes ${iW}`;
+    detail = `Das Vermögen (Top ${100-wPct}%) ist beachtlich — aber das aktuelle ${iW} liegt unter dem Median. Das Polster ist da, der laufende Zufluss fehlt. Relevant, falls das ${iW} dauerhaft niedrig bleibt.${kidsNote}`;
+  } else if (wLow && iTop) {
+    cls='ok'; icon='→↑';
+    headline = `Spitzeneinkommen, kaum Vermögen aufgebaut`;
+    detail = `${iW} in den Top ${100-iPct}% — aber Vermögen noch im unteren Bereich (P${wPct}). Das Einkommen ist die Stärke, die Umsetzung in Vermögen fehlt noch. Sparquote und Anlagedisziplin sind hier der Hebel.${kidsNote}`;
+  } else if (wHigh && iMid) {
+    cls='ok'; icon='→';
+    headline = `Gutes Vermögen, durchschnittliches ${iW}`;
+    detail = `Das Vermögen liegt im oberen Viertel (P${wPct}) — ein klarer Vorsprung gegenüber dem Median. Das ${iW} ist im Mittelfeld. Solide Position ohne großen Wachstumsdruck.${kidsNote}`;
+  } else if (wMid && iHigh) {
+    cls='ok'; icon='→';
+    headline = `Überdurchschnittliches ${iW}, Vermögen im Aufbau`;
+    detail = `Das ${iW} (P${iPct}) liegt gut über dem Median — das ist eine starke Basis. Das Vermögen (P${wPct}) ist noch im mittleren Bereich. Bei dieser Einkommenslage sollte das Aufholen planbar sein.${kidsNote}`;
+  } else if (wMid && iMid) {
+    cls='ok'; icon='→';
+    headline = `Solide Mitte — kein Ausreißer in beide Richtungen`;
+    detail = `Vermögen (P${wPct}) und ${iW} (P${iPct}) bewegen sich nah am Median deiner Altersgruppe${hh}. Keine Schieflagen, aber auch kein struktureller Vorsprung. Der Spielraum nach oben ist real.${kidsNote}`;
+  } else if (wHigh && iLow) {
+    cls='ok'; icon='→';
+    headline = `Vermögen gut aufgebaut, ${iW} unter Median`;
+    detail = `Das Vermögen (P${wPct}) ist ein echter Puffer. Das ${iW} liegt unter dem Median — was entweder temporär ist oder strukturell. Falls dauerhaft: Das Vermögen gibt Zeit, aber kein Ersatz für laufenden Zufluss.${kidsNote}`;
+  } else if (wLow && iMid) {
+    cls='low'; icon='↓';
+    headline = `Vermögen unter Median, ${iW} im Mittelfeld`;
+    detail = `Das ${iW} (P${iPct}) ist okay — aber das Vermögen (P${wPct}) liegt hinter dem, was für deine Altersgruppe typisch ist. Das Einkommen reicht für Aufholen, wenn die Sparquote stimmt.${kidsNote}`;
+  } else if (wMid && iLow) {
+    cls='low'; icon='↓';
+    headline = `${iW} unter Median — Vermögensaufbautempo dürfte sinken`;
+    detail = `Das Vermögen ist im Mittelfeld (P${wPct}), aber das aktuelle ${iWL} (P${iPct}) liegt unter dem Median. Der weitere Aufbau wird langsamer — strukturell schwierig, ohne Einkommenskorrektur.${kidsNote}`;
+  } else if (wLow && iLow) {
+    cls='low'; icon='↓↓';
+    headline = `Beide Dimensionen unter dem Median`;
+    detail = `Weder Vermögen (P${wPct}) noch ${iWL} (P${iPct}) erreichen den Median deiner Altersgruppe${hh}. Das ist kein Urteil — aber ein Signal, dass strukturelle Änderungen bei Sparquote, Einkommen oder Ausgaben sinnvoll wären.${kidsNote}`;
+  } else {
+    cls='low'; icon='↓';
+    headline = `Aufholbedarf in mindestens einer Dimension`;
+    detail = `Vermögen P${wPct}, ${iW} P${iPct}. Eine der beiden Größen liegt deutlich unter dem, was für deine Altersgruppe typisch ist.${kidsNote}`;
+  }
+
+  document.getElementById('verdictEl').innerHTML = `
+    <div class="verdict ${cls}" style="flex-direction:column; align-items:flex-start; gap:4px; padding:12px 16px;">
+      <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600;">
+        <span>${icon}</span><span>${headline}</span>
+      </div>
+      <div style="font-size:11px; font-weight:400; opacity:0.85; line-height:1.55; margin-top:2px;">${detail}</div>
+    </div>
+  `;
+
+  drawWealthChart(wg);
+  drawIncomeChart(ig, equivIncome);
+}
+
+// ═══════════════════════════════════════
+// CHART: WEALTH
+// ═══════════════════════════════════════
+function drawWealthChart(group) {
+  const svg = document.getElementById('wealthChart');
+  const W=700, H=260, pad={top:14,right:44,bottom:42,left:72};
+  const cW=W-pad.left-pad.right, cH=H-pad.top-pad.bottom;
+  const maxV=1100000;
+  const bWt=cW/wealthByAge.length, gap=bWt*0.13, bW=(bWt-gap*2)/2-2;
+
+  const gold    = cssVar('--gold');
+  const goldDk  = cssVar('--gold-dk');
+  const blue    = cssVar('--blue');
+  const blueDk  = '#2a4a7a';
+  const textMuted = cssVar('--text2');
+  const text3   = cssVar('--text3');
+  const gridCol = cssVar('--grid-line');
+  const userCol = cssVar('--user-line');
+  const userLbl = cssVar('--user-label');
+
+  let h='';
+
+  // Grid
+  [0,250000,500000,750000,1000000].forEach(v=>{
+    const y=pad.top+cH-(v/maxV)*cH;
+    h+=`<line x1="${pad.left}" y1="${y}" x2="${W-pad.right}" y2="${y}" stroke="${gridCol}" stroke-width="1"/>`;
+    h+=`<text x="${pad.left-8}" y="${y+4}" font-family="JetBrains Mono,monospace" font-size="10" fill="${text3}" text-anchor="end">${v>=1000?(v/1000)+'k':'0'}</text>`;
+  });
+
+  // User line
+  const clampW=Math.max(0,Math.min(userWealth,maxV));
+  const lineY=pad.top+cH-(clampW/maxV)*cH;
+  h+=`<line x1="${pad.left}" y1="${lineY}" x2="${W-pad.right-8}" y2="${lineY}" stroke="${userCol}" stroke-width="1.5" stroke-dasharray="6 3"/>`;
+  h+=`<text x="${W-pad.right+4}" y="${lineY+4}" font-family="JetBrains Mono,monospace" font-size="9" fill="${userLbl}">${(clampW/1000).toFixed(0)}k</text>`;
+
+  // Bars
+  wealthByAge.forEach((d,i)=>{
+    const x=pad.left+i*bWt+gap;
+    const mH=(d.median/maxV)*cH, tH=(d.top10/maxV)*cH;
+    const mY=pad.top+cH-mH, tY=pad.top+cH-tH;
+    const act=group.label===d.label;
+
+    // Highlight bg
+    if(act) h+=`<rect x="${x-4}" y="${pad.top-6}" width="${bW*2+14}" height="${cH+10}" rx="6" fill="${gold}08" stroke="${gold}22" stroke-width="1"/>`;
+
+    // Blue bar (Top 10%)
+    h+=`<rect x="${x}" y="${tY}" width="${bW}" height="${tH}" rx="3"
+      fill="${act?blue:blueDk}" opacity="${act?0.9:0.45}"/>`;
+
+    // Gold bar (Median)
+    h+=`<rect x="${x+bW+3}" y="${mY}" width="${bW}" height="${mH}" rx="3"
+      fill="${act?gold:goldDk}" opacity="${act?0.9:0.4}"/>`;
+
+    // Value labels
+    h+=`<text x="${x+bW/2}" y="${tY-5}" font-family="JetBrains Mono,monospace" font-size="8" text-anchor="middle" fill="${act?blue:blueDk}" opacity="${act?1:0.6}">${(d.top10/1000).toFixed(0)}k</text>`;
+    h+=`<text x="${x+bW+3+bW/2}" y="${mY-5}" font-family="JetBrains Mono,monospace" font-size="8" text-anchor="middle" fill="${act?gold:goldDk}" opacity="${act?1:0.6}">${(d.median/1000).toFixed(0)}k</text>`;
+
+    // X label
+    h+=`<text x="${x+bW+1.5}" y="${pad.top+cH+18}" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle" fill="${act?textMuted:text3}">${d.label}</text>`;
+  });
+
+  // Axis
+  h+=`<line x1="${pad.left}" y1="${pad.top+cH}" x2="${W-pad.right}" y2="${pad.top+cH}" stroke="${gridCol}" stroke-width="1"/>`;
+  h+=`<text x="13" y="${pad.top+cH/2}" font-family="JetBrains Mono,monospace" font-size="9" fill="${text3}" text-anchor="middle" transform="rotate(-90,13,${pad.top+cH/2})">Nettovermögen (€)</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════
+// CHART: INCOME
+// ═══════════════════════════════════════
+function drawIncomeChart(group, equivIncome) {
+  const svg=document.getElementById('incomeChart');
+  const W=700,H=200,pad={top:14,right:44,bottom:42,left:72};
+  const cW=W-pad.left-pad.right,cH=H-pad.top-pad.bottom;
+  const isPension = group.isPension;
+  const maxV = isPension ? 9000 : 16000;
+  const gridTicks = isPension ? [0,2000,4000,6000,8000] : [0,4000,8000,12000,16000];
+  const bWt=cW/incomeByAge.length, gap=bWt*0.2, bW=bWt-gap*2;
+
+  const rose    = cssVar('--rose');
+  const roseDk  = '#5a1530';
+  const textMuted = cssVar('--text2');
+  const text3   = cssVar('--text3');
+  const gridCol = cssVar('--grid-line');
+  const userCol = cssVar('--user-line');
+  const userLbl = cssVar('--user-label');
+
+  let h='';
+
+  gridTicks.forEach(v=>{
+    const y=pad.top+cH-(v/maxV)*cH;
+    h+=`<line x1="${pad.left}" y1="${y}" x2="${W-pad.right}" y2="${y}" stroke="${gridCol}" stroke-width="1"/>`;
+    h+=`<text x="${pad.left-8}" y="${y+4}" font-family="JetBrains Mono,monospace" font-size="10" fill="${text3}" text-anchor="end">${v>=1000?(v/1000)+'k':'0'}</text>`;
+  });
+
+  const clampI=Math.min(equivIncome, maxV);
+  const lineY=pad.top+cH-(clampI/maxV)*cH;
+  h+=`<line x1="${pad.left}" y1="${lineY}" x2="${W-pad.right-8}" y2="${lineY}" stroke="${userCol}" stroke-width="1.5" stroke-dasharray="6 3"/>`;
+  h+=`<text x="${W-pad.right+4}" y="${lineY+4}" font-family="JetBrains Mono,monospace" font-size="9" fill="${userLbl}">${(clampI/1000).toFixed(1)}k</text>`;
+
+  incomeByAge.forEach((d,i)=>{
+    const x=pad.left+i*bWt+gap;
+    const bH=(d.monthly/maxV)*cH, bY=pad.top+cH-bH;
+    const act=group.label===d.label;
+
+    if(act) h+=`<rect x="${x-4}" y="${pad.top-6}" width="${bW+8}" height="${cH+10}" rx="6" fill="${rose}08" stroke="${rose}22" stroke-width="1"/>`;
+
+    h+=`<rect x="${x}" y="${bY}" width="${bW}" height="${bH}" rx="3"
+      fill="${act?rose:roseDk}" opacity="${act?0.9:0.45}"/>`;
+
+    h+=`<text x="${x+bW/2}" y="${bY-5}" font-family="JetBrains Mono,monospace" font-size="9" text-anchor="middle" fill="${act?rose:roseDk}" opacity="${act?1:0.6}">${d.monthly.toLocaleString('de')}</text>`;
+    h+=`<text x="${x+bW/2}" y="${pad.top+cH+18}" font-family="JetBrains Mono,monospace" font-size="10" text-anchor="middle" fill="${act?textMuted:text3}">${d.label}</text>`;
+  });
+
+  h+=`<line x1="${pad.left}" y1="${pad.top+cH}" x2="${W-pad.right}" y2="${pad.top+cH}" stroke="${gridCol}" stroke-width="1"/>`;
+  h+=`<text x="13" y="${pad.top+cH/2}" font-family="JetBrains Mono,monospace" font-size="9" fill="${text3}" text-anchor="middle" transform="rotate(-90,13,${pad.top+cH/2})">${isPension?'Rente/Monat (€)':'Brutto/Monat (€)'}</text>`;
+
+  svg.innerHTML=h;
+}
+
+// ═══════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════
+document.getElementById('ageRange').addEventListener('input',function(){
+  userAge=+this.value;
+  document.getElementById('ageDisplay').innerHTML=userAge+'<span class="unit">J</span>';
+  update();
+});
+
+document.getElementById('incomeRange').addEventListener('input',function(){
+  userIncome=+this.value;
+  const isPension = getGroup(userAge, incomeByAge).isPension;
+  let v;
+  if (isPension) {
+    v = userIncome.toLocaleString('de');
+  } else {
+    v = userIncome>=10000?(userIncome/1000).toFixed(1).replace('.',',')+' k':userIncome.toLocaleString('de');
+  }
+  document.getElementById('incomeDisplay').innerHTML=v+'<span class="unit">€</span>';
+  update();
+});
+
+document.getElementById('wealthRange').addEventListener('input',function(){
+  userWealth=+this.value;
+  const a=Math.abs(userWealth);
+  let v;
+  if(a>=1000000) v=(userWealth/1000000).toFixed(2).replace('.',',')+' Mio.';
+  else v=userWealth.toLocaleString('de');
+  document.getElementById('wealthDisplay').innerHTML=v+'<span class="unit">€</span>';
+  update();
+});
+
+document.getElementById('partnerToggle').addEventListener('change',function(){
+  hasPartner=this.checked;
+  document.getElementById('partnerLabel').textContent=hasPartner?'Mit Partner':'Kein Partner';
+  update();
+});
+
+document.querySelectorAll('.chip[data-kids]').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.chip[data-kids]').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    numKids=+this.dataset.kids;
+    update();
+  });
+});
+
+update();
+</script>
+</body>
+</html>
